@@ -28,8 +28,10 @@ from drf_yasg import openapi
 from rest_framework.permissions import AllowAny
 
 # JWT
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -42,7 +44,7 @@ schema_view = get_schema_view(
 )
 
 router = DefaultRouter()
-router.register(r'records', FinancialRecordViewSet,basename='records')
+router.register(r'records', FinancialRecordViewSet, basename='records')
 router.register(r'users', UserViewSet)
 
 
@@ -52,7 +54,6 @@ def home(request):
 
 urlpatterns = [
     path('', home),
-
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('api/dashboard/', DashboardSummary.as_view()),
@@ -60,9 +61,4 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0)),
-    path('api/token/', TokenObtainPairView.as_view(permission_classes=[AllowAny])),
-    path('api/token/refresh/', TokenRefreshView.as_view(permission_classes=[AllowAny])),
-    
 ]
-
-
