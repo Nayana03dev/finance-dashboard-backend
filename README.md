@@ -1,106 +1,172 @@
-Finance Dashboard Backend
+# Finance Dashboard Backend
 
-A scalable backend system built using Django and Django REST Framework to manage financial records and provide analytical insights through secure REST APIs. The project focuses on clean architecture, role-based access control, and real-world backend design practices.
+A scalable backend system built using **Django** and **Django REST Framework** to manage financial records and provide analytical insights through secure REST APIs.
 
-Objective
-Manage financial transactions efficiently
-Support multiple user roles with secure access
-Provide dashboard-level analytics
-Demonstrate scalable backend design
-Features
-Authentication
-JWT-based authentication
-Secure API access using tokens
-Only authenticated users can access endpoints
-User Roles
-Viewer
-Can view only their own dashboard
-Restricted to personal financial data
-Analyst
-Can view and analyze all users’ financial records
-Can access any user’s dashboard using query parameters
-Acts as a data analyst using APIs (e.g., Postman)
-Admin
-Full access to the system
-Can create, update, delete records
-Can manage users and access any data
-Access Control
-Implemented using Django REST Framework permissions
-IsAuthenticated ensures only logged-in users can access APIs
-Role-based permissions control read/write access
-Dynamic access allows Admins and Analysts to view any user’s dashboard
+---
 
-Viewers are strictly limited to their own data, ensuring strong data isolation.
+## Highlights
 
-Financial Records
+* Role-based access control (Viewer, Analyst, Admin)
+* JWT authentication for secure access
+* Dashboard analytics with aggregated insights
+* Filtering and pagination support
+* Swagger API documentation for easy testing
 
-Each record includes:
+---
 
-Amount
-Type (Income / Expense)
-Category
-Date
-Notes
-Operations
-Create (Admin only)
-Read (All roles)
-Update (Admin only)
-Delete (Admin only)
-Filtering
+## Objective
 
-Filtering is supported via query parameters:
+This project aims to:
 
+* Manage financial transactions efficiently
+* Support multiple user roles with controlled access
+* Provide meaningful dashboard-level analytics
+* Demonstrate scalable and production-ready backend design
+
+---
+
+## User Roles
+
+### Viewer
+
+* Can view only their own dashboard
+* Restricted to personal financial data
+* No access to other users’ records
+
+### Analyst
+
+* Can view and analyze all users’ financial data
+* Can access any user’s dashboard using query parameters
+* Designed for data analysis using tools like Postman
+
+### Admin
+
+* Full system access
+* Can create, update, and delete records
+* Can manage users and access all data
+
+---
+
+## Access Control
+
+* Implemented using Django REST Framework permissions
+* `IsAuthenticated` ensures only authenticated users can access APIs
+* Role-based permissions control read and write operations
+* Admin and Analyst roles can dynamically access any user’s dashboard
+
+Viewers are strictly restricted to their own data, ensuring strong data isolation.
+
+---
+
+## Financial Records
+
+Each financial record contains:
+
+* Amount
+* Type (Income / Expense)
+* Category
+* Date
+* Notes
+
+### Supported Operations
+
+* Create → Admin only
+* Read → All users
+* Update → Admin only
+* Delete → Admin only
+
+---
+
+## Filtering & Search
+
+Supports query-based filtering:
+
+```bash
 ?type=income
 ?category=Food
 ?date=2026-04-05
 ?user_id=2
-Filtering is available to all users
-Data visibility is controlled based on role
-Dashboard API
+```
+
+* Available for all users
+* Data visibility controlled based on roles
+* Enables flexible querying of financial records
+
+---
+
+## Dashboard API
 
 Provides aggregated financial insights:
 
-Total income
-Total expense
-Net balance
-Category-wise analysis
-Recent transactions
-Monthly trends
-Example
+* Total income
+* Total expense
+* Net balance
+* Category-wise analysis
+* Recent transactions
+* Monthly trends
+
+### Example Requests
+
+```bash
 /api/dashboard/?user_id=2
 /api/dashboard/?username=User1
-Backend Architecture
+```
 
-The project follows a clean separation of concerns:
+---
 
-Serializer → Data validation
-View → Business logic
-Permissions → Access control
+## System Architecture
 
-This ensures modular, maintainable, and scalable code.
+The project follows a clean layered architecture:
 
-Additional Enhancements
-Authentication implemented using JWT tokens for secure API access
-Pagination added to record listing endpoints to efficiently handle large datasets
-Search and filtering support for querying financial records
-API documentation provided using Swagger UI
-Swagger accessible at /swagger/
-Tech Stack
-Python
-Django
-Django REST Framework
-SQLite
-JWT Authentication
-Database
-Uses SQLite for simplicity
-Stored locally as db.sqlite3
-Suitable for development environments
-API Documentation
+* Serializer → Handles validation and data formatting
+* View → Contains business logic
+* Permission → Controls access and security
 
-Swagger UI is available for testing APIs:
+This separation ensures modularity, maintainability, and scalability.
 
+---
+
+## Additional Enhancements
+
+* JWT-based authentication for secure access
+* Pagination support for efficient data handling
+* Search and filtering capabilities
+* Swagger UI for API documentation and testing
+* Accessible at `/swagger/`
+
+---
+
+## Tech Stack
+
+* Python
+* Django
+* Django REST Framework
+* SQLite
+* JWT Authentication
+
+---
+
+## Database
+
+* SQLite used for simplicity and ease of setup
+* Stored locally as `db.sqlite3`
+* Suitable for development environments
+
+---
+
+## API Documentation
+
+Interactive API documentation is available via Swagger:
+
+```bash
 /swagger/
-Setup Instructions
+```
+
+---
+
+## Setup Instructions
+
+```bash
 # Clone repository
 git clone https://github.com/<your-username>/finance-dashboard-backend.git
 cd finance-dashboard-backend
@@ -112,57 +178,119 @@ env\Scripts\activate   # Windows
 # Install dependencies
 pip install -r requirements.txt
 
-# Run migrations
+# Apply migrations
 python manage.py migrate
 
 # Create superuser
 python manage.py createsuperuser
 
-# Start server
+# Run server
 python manage.py runserver
-Authentication
-Get Token
+```
+
+---
+
+## Authentication
+
+### Get Token
+
+```bash
 POST /api/token/
+```
+
+```json
 {
   "username": "your_username",
   "password": "your_password"
 }
-Use Token
+```
+
+### Use Token
+
+```bash
 Authorization: Bearer <your_token>
-API Endpoints
-Endpoint	Description
-/api/records/	Manage financial records
-/api/dashboard/	Dashboard analytics
-/api/users/	User management
-/api/token/	JWT authentication
-/swagger/	API documentation
-Assumptions
-Analysts can access and analyze all users’ data
-Admins have full system control
-Viewers are restricted to their own data
-SQLite is sufficient for development purposes
-Tradeoffs
-SQLite used instead of PostgreSQL for simplicity
-No soft delete implemented
-No rate limiting included
-Basic filtering instead of advanced search
-Future Improvements
-Soft delete functionality
-PostgreSQL integration
-Rate limiting and caching
-Unit and integration testing
-Docker-based deployment
-Author
+```
 
-Nayana Dev
+---
 
-Conclusion
+## API Endpoints
+
+| Endpoint          | Description              |
+| ----------------- | ------------------------ |
+| `/api/records/`   | Manage financial records |
+| `/api/dashboard/` | Dashboard analytics      |
+| `/api/users/`     | User management          |
+| `/api/token/`     | JWT authentication       |
+| `/swagger/`       | API documentation        |
+
+---
+
+## Assumptions
+
+* Analysts can access and analyze all users’ data
+* Admins have full system control
+* Viewers are restricted to their own data
+* SQLite is sufficient for development purposes
+
+---
+
+## Tradeoffs
+
+* SQLite used instead of PostgreSQL for simplicity
+* No soft delete functionality implemented
+* No rate limiting included
+* Basic filtering instead of advanced search
+
+---
+
+## Why This Project
 
 This project demonstrates:
 
-Strong understanding of backend architecture
-Role-based access control implementation
-Secure authentication mechanisms
-Clean and scalable API design
+* Strong backend architecture design
+* Role-based access control implementation
+* Secure authentication using JWT
+* Real-world API design and structuring
+* Clean and scalable code organization
 
-It reflects a practical approach to building real-world backend systems.
+---
+
+## Future Improvements
+
+* Soft delete functionality
+* PostgreSQL database integration
+* Rate limiting and caching
+* Unit and integration testing
+* Docker-based deployment
+
+---
+
+## Author
+
+Nayana Dev
+
+---
+
+## Conclusion
+
+This project showcases a practical and scalable backend system with a strong focus on:
+
+* Security
+* Clean architecture
+* Role-based access control
+* Real-world API design
+
+---
+
+## What Changed (Why This Looks Better)
+
+* Clear section hierarchy
+* Better spacing and grouping
+* Strong visual separation of ideas
+* Short, readable blocks instead of long paragraphs
+* Professional tone (no clutter)
+
+---
+
+
+
