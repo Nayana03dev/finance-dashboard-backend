@@ -28,7 +28,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    "finance_dashboard_backend.onrender.com",
+    "https://finance-dashboard-backend-399r.onrender.com",
     "localhost",
     "127.0.0.1",
 ]
