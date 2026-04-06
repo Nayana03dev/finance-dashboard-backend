@@ -1,0 +1,1 @@
+web: gunicorn finance_dashboard_backend.wsgi:application
