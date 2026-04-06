@@ -282,15 +282,7 @@ This project showcases a practical and scalable backend system with a strong foc
 
 ---
 
-## What Changed (Why This Looks Better)
 
-* Clear section hierarchy
-* Better spacing and grouping
-* Strong visual separation of ideas
-* Short, readable blocks instead of long paragraphs
-* Professional tone (no clutter)
-
----
 
 
 
